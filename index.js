@@ -1,3 +1,5 @@
+var morgan = require('morgan')
+
 let notes = [
     { id: 1, content: "Let's try Express", date: "2019-05-30T17:30:31.098Z", important: true }, 
     { id: 2, content: "Confident about playing 100% JS ?", date: "2019-05-30T18:39:34.091Z", important: false }, 
@@ -84,6 +86,16 @@ app.patch("/api/notes/:id", (req, res) => {
     }
     res.json(note)
 })
+
+// USE OF THE MIDDLEWARE TO RETURN ERROR FOR INEXISTENT ENDPOINTS
+const unknownEndpoint = (request, response, next) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+  
+app.use(unknownEndpoint)
+
+// TODO: implement morgan middleware
+// app.use(morgan('combined'))
 
 const PORT = 3001
 app.listen(PORT, () => {

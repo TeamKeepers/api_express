@@ -33,3 +33,7 @@ content-type: application/json
     "content": "Boumshakalaka",
     "important": false
 }
+
+###
+# Check middleware return for unknown endpoint
+GET http://localhost:3001/api/this-is-a-test/
