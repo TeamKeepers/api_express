@@ -1,0 +1,35 @@
+# If not working, CTRL + K, M to define the doc language to HTTP
+
+###
+# Get all notes
+GET http://localhost:3001/api/notes/
+
+###
+# Get 1 note
+GET http://localhost:3001/api/notes/1
+
+###
+# Delete 1 note
+DELETE http://localhost:3001/api/notes/2
+
+###
+# Post 1 note
+# param: JSON with name and importance (not mandatory)
+POST http://localhost:3001/api/notes/ HTTP/1.1
+content-type: application/json
+
+{
+    "content": "Check dat out",
+    "important": true
+}
+
+###
+# Patch 1 note
+# param: JSON with name and importance (not mandatory)
+PATCH http://localhost:3001/api/notes/1 HTTP/1.1
+content-type: application/json
+
+{
+    "content": "Boumshakalaka",
+    "important": false
+}
