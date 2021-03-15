@@ -1,5 +1,3 @@
-var morgan = require('morgan')
-
 let notes = [
     { id: 1, content: "Let's try Express", date: "2019-05-30T17:30:31.098Z", important: true }, 
     { id: 2, content: "Confident about playing 100% JS ?", date: "2019-05-30T18:39:34.091Z", important: false }, 
@@ -12,16 +10,17 @@ let notes = [
 // const http = require("http");
 
 // const app = http.createServer((request, response) => {
-//     response.writeHead(200, { 'Content-Type': 'application/json' });
-//     response.end(JSON.stringify(notes))
-// })
-
-// const PORT = 3001
-// app.listen(PORT)
-// console.log(`Server running on port ${PORT}`)
-
-// ********* EXPRESS *********
-
+    //     response.writeHead(200, { 'Content-Type': 'application/json' });
+    //     response.end(JSON.stringify(notes))
+    // })
+    
+    // const PORT = 3001
+    // app.listen(PORT)
+    // console.log(`Server running on port ${PORT}`)
+    
+    // ********* EXPRESS *********
+    
+const morgan = require('morgan')
 const express = require('express')
 const app = express()
 
@@ -51,6 +50,10 @@ app.delete('/api/notes/:id', (req, res) => {
     notes = notes.filter(note => note.id !== id)
     res.status(204).end()
 })
+
+// Return also the body info for POST & PATCH
+morgan.token('bodyJSON', req => JSON.stringify(req.body));
+app.use(morgan(':method :url :status :response-time ms :bodyJSON'));
 
 app.post("/api/notes", (req, res) => {
     const body = req.body
@@ -91,11 +94,10 @@ app.patch("/api/notes/:id", (req, res) => {
 const unknownEndpoint = (request, response, next) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }
-  
-app.use(unknownEndpoint)
+// app.use(unknownEndpoint)
 
-// TODO: implement morgan middleware
-// app.use(morgan('combined'))
+// Use MORGAN middleware - common options: combined, common, dev, short, tiny
+// app.use(morgan('dev'))
 
 const PORT = 3001
 app.listen(PORT, () => {
